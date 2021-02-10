@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-world # 占位符, CI脚本的[deploy]阶段动态替换为应用名称
+  name: hello-world-clusterip # 占位符
+spec:
+  ports:
+    - name: service0
+      port: 8080 # 占位符, CI脚本的[deploy]阶段动态替换为应用端口
+      protocol: TCP
+      targetPort: 8080 # 占位符, CI脚本的[deploy]阶段动态替换为应用端口
+  selector:
+    app: hello-world # 占位符
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-world
+  name: hello-world-nodeport
+spec:
+  ports:
+    - name: service0
+      port: hello-world
+      protocol: TCP
+      targetPort: hello-world
+  selector:
+    app: hello-world
+  type: NodePort
